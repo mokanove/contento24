@@ -54,7 +54,7 @@ const myClientId = 'client_' + Math.random().toString(36).substring(2, 15) + Dat
 
     window.send = function() {
         const text = inputElement.value.trim();
-        const nickname = nicknameElement.value.trim() || '匿名极客';
+        const nickname = nicknameElement.value.trim() || '匿名迪克';
 
         if (text && ws.readyState === WebSocket.OPEN) {
             const payload = JSON.stringify({
