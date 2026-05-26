@@ -30,7 +30,18 @@ const httpServer = http.createServer((req, res) => {
     });
 });
 
-const wss = new WebSocket.Server({ server: httpServer });
+const wss = new WebSocket.Server({ 
+    server: httpServer,
+    verifyClient: (info, callback) => {
+        const req = info.req;
+        const rawIP = req.headers['x-forwarded-for'] 
+                      || req.headers['x-real-ip'] 
+                      || req.connection.remoteAddress;
+        
+        req.realClientIP = (rawIP && rawIP.includes(',')) ? rawIP.split(',')[0].trim() : rawIP;
+        callback(true);
+    }
+});
 
 function formatIP(ip) {
     if (!ip) return '未知IP';
@@ -47,11 +58,8 @@ function formatIP(ip) {
 }
 
 wss.on('connection', (ws, req) => {
-    const rawIP = (req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : null) 
-                  || req.headers['x-real-ip'] 
-                  || req.socket.remoteAddress;
-
-    const clientIP = formatIP(rawIP);
+    const finalIP = req.realClientIP || req.socket.remoteAddress;
+    const clientIP = formatIP(finalIP);
 
     ws.on('message', (message) => {
         try {
