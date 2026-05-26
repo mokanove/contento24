@@ -66,7 +66,6 @@
             gap: 16px;
         }
 
-        /* 核心气泡样式框架 */
         .message-row {
             display: flex;
             flex-direction: column;
@@ -82,7 +81,6 @@
             word-break: break-all;
         }
 
-        /* 别人发的消息：靠左，灰色调 */
         .row-other { align-items: flex-start; }
         .row-other .message-card {
             background-color: var(--other-msg-bg);
@@ -90,13 +88,12 @@
         }
         .row-other .message-user { color: #60a5fa; font-weight: bold; }
 
-        /* 我的消息：靠右，蓝色调 */
         .row-me { align-items: flex-end; }
         .row-me .message-card {
             background-color: var(--my-msg-bg);
             border: 1px solid #2563eb;
         }
-        .row-me .message-user { color: #34d399; font-weight: bold; } /* 自己的昵称高亮绿色 */
+        .row-me .message-user { color: #34d399; font-weight: bold; }
 
         .message-meta {
             font-size: 0.75rem;
@@ -106,7 +103,7 @@
             gap: 8px;
             flex-wrap: wrap;
         }
-        .row-me .message-meta { flex-direction: row-reverse; } /* 我发的元数据也靠右对齐 */
+        .row-me .message-meta { flex-direction: row-reverse; }
 
         .message-text {
             font-size: 0.95rem;
@@ -151,7 +148,8 @@
 
 <div class="chat-container">
     <div class="chat-header">
-        <h2>🌐 纯净公网直连聊天室</h2>
+        <h2>🌐 Contento24</h2>
+        <p>一个开源且隐私的24小时在线WebP2P聊天室</p>
         <div class="config-area">
             <label for="nickname" style="font-size: 0.85rem; color: var(--meta-color)">昵称:</label>
             <input type="text" id="nickname" value="玩家_Anonymous" placeholder="输入你的大名">
@@ -167,7 +165,6 @@
 </div>
 
 <script>
-    // 为当前浏览器生成一个临时的唯一身份证（UUID）
     const myClientId = 'client_' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
 
     const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
@@ -184,15 +181,12 @@
         }
     });
 
-    // 接收服务器广播
     ws.onmessage = (event) => {
         try {
             const data = JSON.parse(event.data);
 
-            // 判断这消息是不是我自己发的
             const isMe = (data.clientId === myClientId);
 
-            // 根据身份，动态赋予 row-me (靠右) 还是 row-other (靠左) 的样式
             const rowClass = isMe ? 'row-me' : 'row-other';
             const displayName = isMe ? `${escapeHtml(data.nickname)} (我)` : escapeHtml(data.nickname);
 
@@ -217,14 +211,13 @@
         }
     };
 
-    // 3. 发送消息并带上自己的身份证 myClientId
     function send() {
         const text = inputElement.value.trim();
         const nickname = nicknameElement.value.trim() || '匿名极客';
 
         if (text && ws.readyState === WebSocket.OPEN) {
             const payload = JSON.stringify({
-                clientId: myClientId, // 盖章：把身份证塞进数据包
+                clientId: myClientId, 
                 nickname: nickname,
                 text: text
             });
@@ -243,6 +236,5 @@
         alert('与服务器的连接已断开。');
     };
 </script>
-
 </body>
 </html>
