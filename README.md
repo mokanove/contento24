@@ -8,7 +8,10 @@
 > 安装依赖（以debian sid版本为例）
 ```
 apt update
-apt install -y nodejs pnpm git
+apt install -y nodejs git
+# 为了避免版本不统一或者其他慢性病 这里用nodejs自带的corepack安装pnpm
+sudo corepack enable # 是的需要root权限
+corepack prepare pnpm@latest
 ```
 > 克隆源码并初始化
 ```
@@ -48,7 +51,10 @@ sudo systemctl status Contento24.service
 ## 🔧 如何开发
 > 以ArchLinux为例
 ```
-sudo pacman -Syyuu git pnpm nodejs
+sudo pacman -Syyuu git nodejs
+# 下列方式比较人类可以尝试 直接安装Archlinux源中自带的pnpm将无法self-upgrade 需注意pnpm偶尔可能对npm有依赖关系
+sudo corepack enable # 是的需要root权限
+corepack prepare pnpm@latest
 git clone git@github.com:mokanove/contento24.git
 cd contento24
 pnpm install
