@@ -1,5 +1,6 @@
 # Contento24
 > 一个开源且隐私的24小时在线WebP2P聊天室
+![未知迪克](./contento24_full.svg)
 
 [测试聊天室](https://l.867678.xyz/contento24/)
 ## 🛠 如何自建服务器
@@ -9,7 +10,7 @@
 ```
 apt update
 apt install -y nodejs npm git sudo
-# 为了避免版本不统一或者其他慢性病
+# 为了避免版本不统一或者其他慢性病 这里以npm安装pnpm
 sudo npm install -g pnpm
 pnpm -v # 有输出证明一切安好
 ```
@@ -17,7 +18,6 @@ pnpm -v # 有输出证明一切安好
 ```
 git clone https://github.com/mokanove/contento24.git
 cd contento24/
-git checkout server
 git pull
 pnpm install
 ```
