@@ -8,10 +8,10 @@
 > 安装依赖（以debian sid版本为例）
 ```
 apt update
-apt install -y nodejs git
-# 为了避免版本不统一或者其他慢性病 这里用nodejs自带的corepack安装pnpm
-sudo corepack enable # 是的需要root权限
-corepack prepare pnpm@latest
+apt install -y nodejs npm git sudo
+# 为了避免版本不统一或者其他慢性病
+sudo npm install -g pnpm
+pnpm -v # 有输出证明一切安好
 ```
 > 克隆源码并初始化
 ```
