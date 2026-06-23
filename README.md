@@ -1,7 +1,6 @@
+![未知迪克](./Contento24_full.jpg)
 # Contento24
 > 一个开源且隐私的24小时在线WebP2P聊天室
-
-![未知迪克](./Contento24_full.jpg)
 
 [测试聊天室](https://l.867678.xyz/contento24/)
 ## 🛠 如何自建服务器
